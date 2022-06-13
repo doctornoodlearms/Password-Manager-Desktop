@@ -1,0 +1,327 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Images/Image1.png" type="Texture" id=2]
+[ext_resource path="res://Images/Image2.png" type="Texture" id=3]
+[ext_resource path="res://Images/Image3.png" type="Texture" id=4]
+[ext_resource path="res://Images/Image4.PNG" type="Texture" id=5]
+[ext_resource path="res://Images/Image7.PNG" type="Texture" id=8]
+[ext_resource path="res://Images/Image8.png" type="Texture" id=9]
+[ext_resource path="res://Images/Image9.PNG" type="Texture" id=10]
+[ext_resource path="res://Scripts/Tutorial/Buttons.cs" type="Script" id=11]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Vbox" type="VBoxContainer" parent="Background"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+
+[node name="Margin" type="MarginContainer" parent="Background/Vbox"]
+margin_right = 1010.0
+margin_bottom = 562.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+
+[node name="Tabs" type="TabContainer" parent="Background/Vbox/Margin"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 990.0
+margin_bottom = 562.0
+tab_align = 0
+tabs_visible = false
+
+[node name="Dialog1" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Image" type="TextureRect" parent="Background/Vbox/Margin/Tabs/Dialog1"]
+margin_right = 962.0
+margin_bottom = 512.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 1
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog1"]
+margin_top = 516.0
+margin_right = 962.0
+margin_bottom = 530.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Basically this is the very shit version of what will allow you to send your passwords from your desktop to your phone"
+align = 1
+autowrap = true
+
+[node name="Dialog2" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Image" type="TextureRect" parent="Background/Vbox/Margin/Tabs/Dialog2"]
+margin_right = 962.0
+margin_bottom = 484.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 1
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog2"]
+margin_top = 488.0
+margin_right = 962.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Start by simply allowing your PC to be a server that your device will connect to"
+align = 1
+autowrap = true
+
+[node name="Dialog3" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Image" type="TextureRect" parent="Background/Vbox/Margin/Tabs/Dialog3"]
+margin_right = 962.0
+margin_bottom = 484.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 1
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog3"]
+margin_top = 488.0
+margin_right = 962.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Now open the app on your phone"
+align = 1
+autowrap = true
+
+[node name="Dialog4" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Image" type="TextureRect" parent="Background/Vbox/Margin/Tabs/Dialog4"]
+margin_right = 962.0
+margin_bottom = 453.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 1
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog4"]
+margin_top = 457.0
+margin_right = 962.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Now you will need to enter the IP address of your PC (the server) which will be in the bottom left after you start the server"
+align = 1
+autowrap = true
+
+[node name="Dialog7" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Image" type="TextureRect" parent="Background/Vbox/Margin/Tabs/Dialog7"]
+margin_right = 962.0
+margin_bottom = 422.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog7"]
+margin_top = 426.0
+margin_right = 962.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Then enter the IPv4 Address you found into the IP Address field like in the example. If the address is correct it should connect very quickly otherwise you will be required to re-enter the address."
+align = 1
+autowrap = true
+
+[node name="Dialog8" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Image" type="TextureRect" parent="Background/Vbox/Margin/Tabs/Dialog8"]
+margin_right = 962.0
+margin_bottom = 415.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog8"]
+margin_top = 419.0
+margin_right = 962.0
+margin_bottom = 478.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Once connected your phone will say its waiting for a password. Then this is what your desktop will look like (the client name will be different)"
+align = 1
+autowrap = true
+
+[node name="Dialog9" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Image" type="TextureRect" parent="Background/Vbox/Margin/Tabs/Dialog9"]
+margin_right = 962.0
+margin_bottom = 446.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog9"]
+margin_top = 450.0
+margin_right = 962.0
+margin_bottom = 478.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Now you just simply need to enter a key, and hit send"
+align = 1
+autowrap = true
+
+[node name="Dialog10" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Image" type="TextureRect" parent="Background/Vbox/Margin/Tabs/Dialog10"]
+margin_right = 962.0
+margin_bottom = 453.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 10 )
+expand = true
+stretch_mode = 6
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog10"]
+margin_top = 457.0
+margin_right = 962.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Once sent your phone will update to the example. The password is now on your clipboard and you can just paste it into your login for whatever"
+align = 1
+autowrap = true
+
+[node name="Dialog11" type="VBoxContainer" parent="Background/Vbox/Margin/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 8.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Explanation" type="Label" parent="Background/Vbox/Margin/Tabs/Dialog11"]
+margin_top = 228.0
+margin_right = 962.0
+margin_bottom = 287.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "If you still have any questions then DM Noodle he can probably explain it better then this very bad tutorial that took like 30 minutes to make"
+align = 1
+autowrap = true
+
+[node name="Buttons" type="HBoxContainer" parent="Background/Vbox"]
+margin_top = 566.0
+margin_right = 1010.0
+margin_bottom = 586.0
+size_flags_horizontal = 3
+script = ExtResource( 11 )
+
+[node name="Back" type="Button" parent="Background/Vbox/Buttons"]
+margin_right = 42.0
+margin_bottom = 20.0
+text = "Back"
+
+[node name="Continue" type="Button" parent="Background/Vbox/Buttons"]
+margin_left = 941.0
+margin_right = 1010.0
+margin_bottom = 20.0
+size_flags_horizontal = 10
+text = "Continue"

@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+[application]
+
+config/name="Password Manager Desktop 2"
+run/main_scene="res://Scenes/Main.tscn"
+config/icon="res://icon.png"
+config/version="1.0.0"
+config/HideMaster=true
+config/CharacterCount=30
+config/InvalidCharacters=""
+config/CharacterSet=0
+config/SaveMaster=true
+secret/Token=""
+config/LegacyAlgorithm=false
+secret/Master=""
+
+[autoload]
+
+PasswordDB="*res://Scripts/Global/PasswordDatabase.cs"
+Validation="*res://Scripts/Global/Validation.cs"
+Network="*res://Scripts/Global/Network.cs"
+ProgramMain="*res://Scripts/Global/ProgramMain.cs"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

@@ -1,0 +1,396 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Settings/SettingsMain.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Settings/SettingsDeviceList.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Settings/SettingsTutorial.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/Settings/SettingsToken.cs" type="Script" id=6]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="Background"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="VBoxContainer" parent="Background/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="Background/TabContainer/Main"]
+margin_right = 1002.0
+margin_bottom = 14.0
+text = "Settings"
+align = 1
+
+[node name="Margin" type="MarginContainer" parent="Background/TabContainer/Main"]
+margin_top = 18.0
+margin_right = 1002.0
+margin_bottom = 550.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 100
+custom_constants/margin_top = 20
+custom_constants/margin_left = 100
+
+[node name="Scroll" type="ScrollContainer" parent="Background/TabContainer/Main/Margin"]
+margin_left = 100.0
+margin_top = 20.0
+margin_right = 902.0
+margin_bottom = 532.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="List" type="VBoxContainer" parent="Background/TabContainer/Main/Margin/Scroll"]
+margin_right = 802.0
+margin_bottom = 512.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+
+[node name="HideMaster" type="HBoxContainer" parent="Background/TabContainer/Main/Margin/Scroll/List"]
+margin_right = 802.0
+margin_bottom = 40.0
+hint_tooltip = "Changes the text of the master password to the secret character"
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Background/TabContainer/Main/Margin/Scroll/List/HideMaster"]
+margin_top = 13.0
+margin_right = 399.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "Hide Master Password"
+align = 1
+
+[node name="Value" type="CheckButton" parent="Background/TabContainer/Main/Margin/Scroll/List/HideMaster"]
+margin_left = 564.0
+margin_right = 640.0
+margin_bottom = 40.0
+mouse_filter = 1
+size_flags_horizontal = 6
+pressed = true
+align = 1
+
+[node name="SaveMaster" type="HBoxContainer" parent="Background/TabContainer/Main/Margin/Scroll/List"]
+margin_top = 44.0
+margin_right = 802.0
+margin_bottom = 84.0
+hint_tooltip = "If you want to enter your master password when first opened"
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Background/TabContainer/Main/Margin/Scroll/List/SaveMaster"]
+margin_top = 13.0
+margin_right = 399.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "Save Master"
+align = 1
+
+[node name="Value" type="CheckButton" parent="Background/TabContainer/Main/Margin/Scroll/List/SaveMaster"]
+margin_left = 564.0
+margin_right = 640.0
+margin_bottom = 40.0
+mouse_filter = 1
+size_flags_horizontal = 6
+pressed = true
+align = 1
+
+[node name="CharacterCount" type="HBoxContainer" parent="Background/TabContainer/Main/Margin/Scroll/List"]
+margin_top = 88.0
+margin_right = 802.0
+margin_bottom = 112.0
+hint_tooltip = "How long the created password should be"
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Background/TabContainer/Main/Margin/Scroll/List/CharacterCount"]
+margin_top = 5.0
+margin_right = 399.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Character Count"
+align = 1
+
+[node name="Value" type="LineEdit" parent="Background/TabContainer/Main/Margin/Scroll/List/CharacterCount"]
+margin_left = 403.0
+margin_right = 802.0
+margin_bottom = 24.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 4
+align = 1
+
+[node name="UnusableCharacters" type="HBoxContainer" parent="Background/TabContainer/Main/Margin/Scroll/List"]
+margin_top = 116.0
+margin_right = 802.0
+margin_bottom = 140.0
+hint_tooltip = "What characters should be excluded from a created password"
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Background/TabContainer/Main/Margin/Scroll/List/UnusableCharacters"]
+margin_top = 5.0
+margin_right = 399.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "Unusable Characters"
+align = 1
+
+[node name="Value" type="LineEdit" parent="Background/TabContainer/Main/Margin/Scroll/List/UnusableCharacters"]
+margin_left = 403.0
+margin_right = 802.0
+margin_bottom = 24.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 4
+align = 1
+
+[node name="CharacterSet" type="HBoxContainer" parent="Background/TabContainer/Main/Margin/Scroll/List"]
+margin_top = 144.0
+margin_right = 802.0
+margin_bottom = 164.0
+hint_tooltip = "A predefined set of characters to be used in a password"
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Background/TabContainer/Main/Margin/Scroll/List/CharacterSet"]
+margin_top = 3.0
+margin_right = 399.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Character Set"
+align = 1
+
+[node name="Value" type="OptionButton" parent="Background/TabContainer/Main/Margin/Scroll/List/CharacterSet"]
+margin_left = 403.0
+margin_right = 802.0
+margin_bottom = 20.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "All Characters"
+align = 1
+items = [ "All Characters", null, false, 0, null, "Alphanumeric", null, false, 1, null, "Alphabetic", null, false, 2, null ]
+selected = 0
+
+[node name="Legacy" type="HBoxContainer" parent="Background/TabContainer/Main/Margin/Scroll/List"]
+margin_top = 168.0
+margin_right = 802.0
+margin_bottom = 208.0
+hint_tooltip = "Whether a new password uses the old algorithm"
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Background/TabContainer/Main/Margin/Scroll/List/Legacy"]
+margin_top = 13.0
+margin_right = 399.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "Legacy Mode"
+align = 1
+
+[node name="Value" type="CheckButton" parent="Background/TabContainer/Main/Margin/Scroll/List/Legacy"]
+margin_left = 564.0
+margin_right = 640.0
+margin_bottom = 40.0
+mouse_filter = 1
+size_flags_horizontal = 6
+size_flags_vertical = 3
+align = 1
+
+[node name="Token" type="VBoxContainer" parent="Background/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="Background/TabContainer/Token"]
+margin_right = 1002.0
+margin_bottom = 14.0
+text = "Settings"
+align = 1
+
+[node name="Margin" type="MarginContainer" parent="Background/TabContainer/Token"]
+margin_top = 18.0
+margin_right = 1002.0
+margin_bottom = 550.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 100
+custom_constants/margin_top = 20
+custom_constants/margin_left = 100
+
+[node name="Vbox" type="VBoxContainer" parent="Background/TabContainer/Token/Margin"]
+margin_left = 100.0
+margin_top = 20.0
+margin_right = 902.0
+margin_bottom = 532.0
+script = ExtResource( 6 )
+
+[node name="CopyUserToken" type="HBoxContainer" parent="Background/TabContainer/Token/Margin/Vbox"]
+margin_right = 802.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="Background/TabContainer/Token/Margin/Vbox/CopyUserToken"]
+margin_top = 3.0
+margin_right = 399.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Copy User Token"
+align = 1
+
+[node name="Button" type="Button" parent="Background/TabContainer/Token/Margin/Vbox/CopyUserToken"]
+margin_left = 581.0
+margin_right = 624.0
+margin_bottom = 20.0
+size_flags_horizontal = 6
+size_flags_vertical = 2
+text = "Copy"
+
+[node name="Device" type="VBoxContainer" parent="Background/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Title" type="Label" parent="Background/TabContainer/Device"]
+margin_right = 1002.0
+margin_bottom = 14.0
+text = "Connected Devices"
+align = 1
+
+[node name="DeviceList" type="VBoxContainer" parent="Background/TabContainer/Device"]
+margin_top = 18.0
+margin_right = 1002.0
+margin_bottom = 526.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource( 3 )
+
+[node name="NoClients" type="Label" parent="Background/TabContainer/Device/DeviceList"]
+visible = false
+margin_top = 200.0
+margin_right = 1002.0
+margin_bottom = 228.0
+text = "No Clients Connected"
+align = 1
+
+[node name="Client" type="HBoxContainer" parent="Background/TabContainer/Device/DeviceList"]
+visible = false
+margin_top = 195.0
+margin_right = 1002.0
+margin_bottom = 233.0
+
+[node name="ClientName" type="Label" parent="Background/TabContainer/Device/DeviceList/Client"]
+margin_top = 5.0
+margin_right = 236.0
+margin_bottom = 33.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.8
+text = "Client Name"
+align = 1
+
+[node name="PasswordLabel" type="LineEdit" parent="Background/TabContainer/Device/DeviceList/Client"]
+margin_left = 240.0
+margin_right = 536.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+align = 1
+placeholder_text = "Label"
+
+[node name="PasswordKey" type="LineEdit" parent="Background/TabContainer/Device/DeviceList/Client"]
+margin_left = 540.0
+margin_right = 837.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+align = 1
+placeholder_text = "Password Key"
+
+[node name="Send" type="Button" parent="Background/TabContainer/Device/DeviceList/Client"]
+margin_left = 841.0
+margin_right = 1002.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+text = "Send to Client"
+
+[node name="StartServer" type="Button" parent="Background/TabContainer/Device/DeviceList"]
+margin_left = 458.0
+margin_top = 244.0
+margin_right = 543.0
+margin_bottom = 264.0
+size_flags_horizontal = 4
+text = "Start Server"
+
+[node name="Hbox" type="HBoxContainer" parent="Background/TabContainer/Device"]
+margin_top = 530.0
+margin_right = 1002.0
+margin_bottom = 550.0
+
+[node name="Address" type="Label" parent="Background/TabContainer/Device/Hbox"]
+margin_top = 3.0
+margin_bottom = 17.0
+
+[node name="Button" type="Button" parent="Background/TabContainer/Device/Hbox"]
+margin_left = 891.0
+margin_right = 1002.0
+margin_bottom = 20.0
+size_flags_horizontal = 10
+text = "Wtf is this shit?"
+script = ExtResource( 4 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Background"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+mouse_filter = 2
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Back" type="Button" parent="Background/MarginContainer"]
+margin_left = 10.0
+margin_top = 556.0
+margin_right = 52.0
+margin_bottom = 576.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Back"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="pressed" from="Background/TabContainer/Token/Margin/Vbox/CopyUserToken/Button" to="Background/TabContainer/Token/Margin/Vbox" method="On_CopyUser_Pressed"]

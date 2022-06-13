@@ -1,0 +1,72 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Instances/GroupSelectPopup.cs" type="Script" id=1]
+
+[node name="GroupSelection" type="PanelContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -97.0
+margin_top = -61.0
+margin_right = 97.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Vbox" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 187.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Title" type="Label" parent="Vbox"]
+margin_right = 180.0
+margin_bottom = 14.0
+size_flags_vertical = 0
+text = "Select Group"
+align = 1
+
+[node name="OptionButton" type="OptionButton" parent="Vbox"]
+margin_top = 24.0
+margin_right = 180.0
+margin_bottom = 44.0
+size_flags_vertical = 0
+align = 1
+
+[node name="Custom" type="LineEdit" parent="Vbox"]
+visible = false
+margin_top = 54.0
+margin_right = 180.0
+margin_bottom = 78.0
+size_flags_vertical = 0
+align = 1
+placeholder_text = "Custom"
+
+[node name="Buttons" type="HBoxContainer" parent="Vbox"]
+margin_top = 54.0
+margin_right = 180.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_constants/separation = 10
+
+[node name="Accept" type="Button" parent="Vbox/Buttons"]
+margin_right = 85.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Accept"
+
+[node name="Cancel" type="Button" parent="Vbox/Buttons"]
+margin_left = 95.0
+margin_right = 180.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Cancel"

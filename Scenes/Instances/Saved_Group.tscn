@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Passwords/CreatedGroup.cs" type="Script" id=1]
+
+[node name="GroupDuplicate" type="VBoxContainer"]
+margin_right = 1010.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GroupHead" type="HBoxContainer" parent="."]
+margin_right = 1010.0
+margin_bottom = 24.0
+
+[node name="CheckBox" type="CheckBox" parent="GroupHead"]
+margin_right = 24.0
+margin_bottom = 24.0
+size_flags_vertical = 6
+
+[node name="GroupItems" type="VBoxContainer" parent="."]
+visible = false
+margin_top = 28.0
+margin_right = 1010.0
+margin_bottom = 40.0
+size_flags_vertical = 3
