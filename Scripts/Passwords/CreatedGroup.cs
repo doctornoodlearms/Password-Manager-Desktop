@@ -17,8 +17,15 @@ public class CreatedGroup : VBoxContainer
 	public void AddPassword(Node newPassword, int index) {
 
 		Debugger.Print("Adding New Password: "+newPassword.Name);
+		if(GetNode("GroupItems").GetChildCount() != 0) {
 
-		GetNode("GroupItems").AddChild(newPassword);
+			GetNode("GroupItems").AddChild(newPassword);
+			GetNode("GroupItems").MoveChild(newPassword, index);
+		}
+		else {
+
+			GetNode("GroupItems").AddChild(newPassword);
+		}
 	}
 
 	public void RemovePassword(String passwordID) {

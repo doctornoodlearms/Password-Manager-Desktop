@@ -20,13 +20,10 @@ public class PasswordList : Control
 
 		//Get list of passwords
 		Debugger.Print("Creating Existing Passwords");
-		System.Collections.IEnumerator enumerator = GetNode<PasswordDatabase>("/root/PasswordDB").passwordList.Values.GetEnumerator();
+		foreach(PasswordData i in GetNode<PasswordDatabase>("/root/PasswordDB").passwordList) {
 
-		//Create pre existing passwords
-		while(enumerator.MoveNext()) {
-
-			Debugger.Print((enumerator.Current as PasswordData).Id);
-			CreateNewPassword((PasswordData) enumerator.Current);
+			Debugger.Print(i.Id);
+			CreateNewPassword(i);	
 		}
 
 		Debugger.Print("Ready");
@@ -57,7 +54,7 @@ public class PasswordList : Control
 
 			CreatedPassword newPassword = GD.Load<PackedScene>("res://Scenes/Instances/Saved_Password.tscn").Instance<CreatedPassword>();
 
-			newPassword.Name = savedPassword.Id;
+			newPassword.Name = savedPassword.Id.ToString();
 			newPassword.savedPassword = savedPassword;
 			newPassword.GetNode<Label>("Label").Text = savedPassword.Label;
 
@@ -65,14 +62,15 @@ public class PasswordList : Control
 			if(HasNode(savedPassword.Group)) {
 
 				Debugger.Print("Group Found, Forwarding Node To Group");
-				GetNode<CreatedGroup>(savedPassword.Group).AddPassword(newPassword, savedPassword.Index);
+				int index = GetNode<PasswordDatabase>("/root/PasswordDB").GetPasswordIndexInGroup(savedPassword.Id);
+				GetNode<CreatedGroup>(savedPassword.Group).AddPassword(newPassword, index);
 			}
 			else {
 
 				Debugger.Print("Failed To Find Group", Debugger.DebuggerState.STATE_WARNING);
 				Debugger.Print("Creating New Group: "+ savedPassword.Group);
 				CreatedGroup createdGroup = CreateNewGroup(savedPassword.Group);
-				createdGroup.AddPassword(newPassword, savedPassword.Index);
+				createdGroup.AddPassword(newPassword, 0);
 			}
 		}
 		catch(InvalidPasswordIDException e) {
@@ -88,13 +86,13 @@ public class PasswordList : Control
 		if(HasNode(savedPassword.Group)) {
 
 			Debugger.Print("Group '"+savedPassword.Group+"' Found");
-			GetNode<CreatedGroup>(savedPassword.Group).RemovePassword(savedPassword.Id);
+			GetNode<CreatedGroup>(savedPassword.Group).RemovePassword(savedPassword.Id.ToString());
 
 		}
-		else if(HasNode(savedPassword.Id)) {
+		else if(HasNode(savedPassword.Id.ToString())) {
 
 			Debugger.Print("Failed To Find Group: " + savedPassword.Group, Debugger.DebuggerState.STATE_WARNING);
-			GetNode<CreatedPassword>(savedPassword.Id).Remove();
+			GetNode<CreatedPassword>(savedPassword.Id.ToString()).Remove();
 		}
 	}
 }

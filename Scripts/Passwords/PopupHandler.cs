@@ -82,7 +82,7 @@ public class PopupHandler : Control
 		Debugger.Print("Requesting Create Password: "+ savedPassword.Id);
 		GetNode<PasswordDatabase>("/root/PasswordDB").CreatePassword(savedPassword);
 	}
-	private void OnPasswordOptionsUpdated(String oldPasswordID, PasswordData savedPassword) {
+	private void OnPasswordOptionsUpdated(int oldPasswordID, PasswordData savedPassword) {
 
 		Debugger.Print("Updating Password: "+oldPasswordID);
 		GetNode<PasswordDatabase>("/root/PasswordDB").UpdatePassword(oldPasswordID, savedPassword);
