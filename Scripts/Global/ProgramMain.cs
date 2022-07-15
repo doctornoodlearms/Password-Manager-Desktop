@@ -9,6 +9,10 @@ public class ProgramMain : Node {
 
 	public override void _Ready() {
 
+		// Assign Enviornment Variable
+		System.Environment.SetEnvironmentVariable(Settings.ProgramEnvVar, OS.GetExecutablePath(), EnvironmentVariableTarget.User);
+		
+
 		GetNode<Validation>("/root/Validation").Validate();
 		GetNode<PasswordDatabase>("/root/PasswordDB").Init();
 

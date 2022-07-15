@@ -50,6 +50,11 @@ public class Settings : Node{
 		get;
 		set;
 	}
+	public static string ProgramEnvVar {
+
+		get => (string) ProjectSettings.GetSetting("application/config/ProgramEnviornmentVar");
+		set => ProjectSettings.SetSetting("application/config/ProgramEnviornmentVar", value);
+	}
 
 	public static String GetCharacters() {
 
