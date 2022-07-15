@@ -35,7 +35,7 @@ public class CreatedPassword : HBoxContainer
 	private void OnCopyPressed() {
 
 		Debugger.Print("Copy Pressed");
-		GetNode<PasswordDatabase>("/root/PasswordDB").GeneratePassword(savedPassword);
+		PasswordDatabase.GeneratePassword(savedPassword);
 	}
 	private void OnViewKeyPressed() {
 

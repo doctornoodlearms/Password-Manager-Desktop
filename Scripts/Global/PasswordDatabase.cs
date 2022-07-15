@@ -39,7 +39,7 @@ class PasswordDatabase : Node {
 	/// Generate a new password and copy it to clipboard
 	/// </summary>
 	/// <param name="savedPassword"></param>
-	public void GeneratePassword(PasswordData savedPassword) {
+	public static void GeneratePassword(PasswordData savedPassword) {
 
 		string password = "";
 
@@ -227,7 +227,7 @@ class PasswordDatabase : Node {
 	/// </summary>
 	/// <param name="savedPassword"></param>
 	/// <returns></returns>
-	private string GetCharacters(PasswordData savedPassword) {
+	private static string GetCharacters(PasswordData savedPassword) {
 
 		Debugger.Print("Getting Character List");
 

@@ -51,7 +51,7 @@ public class Main : VBoxContainer
 	private void OnKeyTextEntered(String value) {
 
 		GetNode<LineEdit>("Vbox/Key").Text = "";
-		GetNode<PasswordDatabase>("/root/PasswordDB").GeneratePassword(new PasswordData(value, newLegacy: Settings.legacy, newCount: Settings.characterCount, newSet: (CharacterSets) Settings.characterSet, newInvalid: Settings.unusableCharacters));
+		PasswordDatabase.GeneratePassword(new PasswordData(value, newLegacy: Settings.legacy, newCount: Settings.characterCount, newSet: (CharacterSets) Settings.characterSet, newInvalid: Settings.unusableCharacters));
 	}
 	private void OnCountTextEntered(String value) {
 

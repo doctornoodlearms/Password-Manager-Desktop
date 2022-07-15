@@ -45,6 +45,11 @@ public class Settings : Node{
 		get => (Boolean) ProjectSettings.GetSetting("application/config/LegacyAlgorithm");
 		set => UpdateSetting("config/LegacyAlgorithm", value);
 	}
+	public static bool safeMode {
+
+		get;
+		set;
+	}
 
 	public static String GetCharacters() {
 

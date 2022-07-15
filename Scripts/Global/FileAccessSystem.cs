@@ -23,8 +23,11 @@ public static class FileAccessSystem {
 	/// </summary>
 	public static void WriteSettings() {
 
-		Debugger.Print("Saving Project Settings");
-		ProjectSettings.SaveCustom("override.cfg");
+		if(!Settings.safeMode) {
+
+			Debugger.Print("Saving Project Settings");
+			ProjectSettings.SaveCustom("override.cfg");
+		}
 	}
 
 	/// <summary>
@@ -34,32 +37,35 @@ public static class FileAccessSystem {
 	/// <param name="data"></param>
 	public static void WriteAllUserData(String fileName, Godot.Collections.Array<PasswordData> data) {
 
-		String targetFile = GetCurrentLocation() + folderName + fileName;
+		if(!Settings.safeMode) {
 
-		File file = new File();
+			String targetFile = GetCurrentLocation() + folderName + fileName;
 
-		if(!FolderExists(folderName)) {
+			File file = new File();
 
-			Debugger.Print("Folder '" + folderName + "' Doesnt Exist", Debugger.DebuggerState.STATE_WARNING);
-			Debugger.Print("Creating New Folder");
-			CreateFolder(GetCurrentLocation() + folderName);	
-		}
+			if(!FolderExists(folderName)) {
 
-		if(data.Count > 0) {
-
-			Debugger.Print("Attempting To Open File: "+targetFile);
-			file.Open(targetFile, File.ModeFlags.Write);
-			foreach(PasswordData password in data) {
-
-				file.StoreLine(JSON.Print(password.Save()));
+				Debugger.Print("Folder '" + folderName + "' Doesnt Exist", Debugger.DebuggerState.STATE_WARNING);
+				Debugger.Print("Creating New Folder");
+				CreateFolder(GetCurrentLocation() + folderName);
 			}
-			file.Close();
-		}
-		else {
 
-			Debugger.Print("File Empty: "+targetFile);
-			file.Open(targetFile, File.ModeFlags.Write);
-			file.Close();
+			if(data.Count > 0) {
+
+				Debugger.Print("Attempting To Open File: " + targetFile);
+				file.Open(targetFile, File.ModeFlags.Write);
+				foreach(PasswordData password in data) {
+
+					file.StoreLine(JSON.Print(password.Save()));
+				}
+				file.Close();
+			}
+			else {
+
+				Debugger.Print("File Empty: " + targetFile);
+				file.Open(targetFile, File.ModeFlags.Write);
+				file.Close();
+			}
 		}
 	}
 
@@ -70,29 +76,35 @@ public static class FileAccessSystem {
 	/// <param name="data"></param>
 	public static void WritePassword(String fileName, PasswordData data) {
 
-		String targetFile = GetCurrentLocation() + folderName + fileName;
+		if(!Settings.safeMode) {
 
-		if(!FolderExists(folderName)) {
+			String targetFile = GetCurrentLocation() + folderName + fileName;
 
-			Debugger.Print("Folder '" + folderName + "' Doesnt Exist", Debugger.DebuggerState.STATE_WARNING);
-			Debugger.Print("Creating New Folder");
-			CreateFolder(GetCurrentLocation() + folderName);
+			if(!FolderExists(folderName)) {
+
+				Debugger.Print("Folder '" + folderName + "' Doesnt Exist", Debugger.DebuggerState.STATE_WARNING);
+				Debugger.Print("Creating New Folder");
+				CreateFolder(GetCurrentLocation() + folderName);
+			}
+
+			File file = new File();
+			file.Open(targetFile, File.ModeFlags.Write);
+
+			Debugger.Print("Writing '" + data.Id + "' To File");
+			file.StoreLine(JSON.Print(data.Save()));
+			file.Close();
 		}
-
-		File file = new File();
-		file.Open(targetFile, File.ModeFlags.Write);
-
-		Debugger.Print("Writing '"+data.Id+"' To File");
-		file.StoreLine(JSON.Print(data.Save()));
-		file.Close();
 	}
 
 	public static void WriteStringToUser(String fileName, String data) {
 
-		File file = new File();
-		file.Open("user://"+fileName, File.ModeFlags.Write);
-		file.StoreString(data);
-		file.Close();
+		if(!Settings.safeMode) {
+
+			File file = new File();
+			file.Open("user://" + fileName, File.ModeFlags.Write);
+			file.StoreString(data);
+			file.Close();
+		}
 	}
 	public static String ReadStringFromUser(String fileName) {
 

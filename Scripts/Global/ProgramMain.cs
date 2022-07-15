@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using NewConsole;
+using CommandHandler;
 
 public class ProgramMain : Node {
 
@@ -10,6 +11,12 @@ public class ProgramMain : Node {
 
 		GetNode<Validation>("/root/Validation").Validate();
 		GetNode<PasswordDatabase>("/root/PasswordDB").Init();
+
+		CommandList commandList = new CommandList();
+		commandList.AddCommand(new TestCommand());
+		commandList.AddCommand(new SafeModeCommand());
+		commandList.AddCommand(new GetPasswordCommand());
+		commandList.ExecuteCommand(OS.GetCmdlineArgs());
 
 		base._Ready();
 	}
