@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using SavedPassword;
 using NewConsole;
 
@@ -8,7 +7,7 @@ public class Main : VBoxContainer
 
 	public override void _Ready() {
 
-		String version = (String)ProjectSettings.GetSetting("application/config/version");
+		string version = (string)ProjectSettings.GetSetting("application/config/version");
 		GetNode<Label>("Version").Text = "Version: " + version;
 
 		GetNode<Validation>("/root/Validation").Connect(nameof(Validation.UserPrompted), this, nameof(GD.Print), new Godot.Collections.Array { "User Prompted" });
@@ -38,7 +37,7 @@ public class Main : VBoxContainer
 		}
 	}
 
-	private void OnMasterTextEntered(String value) {
+	private void OnMasterTextEntered(string value) {
 
 		GetNode<ConfirmationDialog>("../../ConfirmationDialog").PopupCentered();
 	}
@@ -48,12 +47,12 @@ public class Main : VBoxContainer
 		GetNode<LineEdit>("Vbox/Master").Text = "";
 	}
 
-	private void OnKeyTextEntered(String value) {
+	private void OnKeyTextEntered(string value) {
 
 		GetNode<LineEdit>("Vbox/Key").Text = "";
 		PasswordDatabase.GeneratePassword(new PasswordData(value, newLegacy: Settings.legacy, newCount: Settings.characterCount, newSet: (CharacterSets) Settings.characterSet, newInvalid: Settings.unusableCharacters));
 	}
-	private void OnCountTextEntered(String value) {
+	private void OnCountTextEntered(string value) {
 
 		GetNode<LineEdit>("Options/CountMargin/Count").Text = "";
 		if(value.IsValidInteger()) {
@@ -61,7 +60,7 @@ public class Main : VBoxContainer
 			Settings.SetCharacterCount(value);
 		}
 	}
-	private void OnUnusableTextEntered(String value) {
+	private void OnUnusableTextEntered(string value) {
 
 		GetNode<LineEdit>("Options/UnusableMargin/Unusable").Text = "";
 		Settings.unusableCharacters = value;

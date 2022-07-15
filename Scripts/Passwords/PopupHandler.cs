@@ -1,16 +1,15 @@
 using Godot;
-using System;
 using SavedPassword;
 using NewConsole;
 public class PopupHandler : Control
 {
 
-	[Signal] public delegate void GroupSelectionAccept(String groupName);
-	[Signal] public delegate void GroupSelectionUpdate(String passwordID, String groupName);
+	[Signal] public delegate void GroupSelectionAccept(string groupName);
+	[Signal] public delegate void GroupSelectionUpdate(string passwordID, string groupName);
 	[Signal] public delegate void GroupSelectionCancel();
 
 
-	public void PopupNotification(String message, String title) {
+	public void PopupNotification(string message, string title) {
 
 		GetNode<AcceptDialog>("Notification").DialogText = message;
 		GetNode<AcceptDialog>("Notification").WindowTitle = title;
@@ -37,7 +36,7 @@ public class PopupHandler : Control
 		groupSelect.Connect("tree_exiting", this, nameof(OnGroupSelectExitTree), new Godot.Collections.Array { groupSelect });
 		AddChild(groupSelect);
 	}
-	private void OnGroupSelectAccept(String groupName) {
+	private void OnGroupSelectAccept(string groupName) {
 
 		EmitSignal(nameof(GroupSelectionAccept), groupName);
 	}

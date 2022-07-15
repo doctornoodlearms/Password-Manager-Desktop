@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using NewConsole;
 public class CreatedGroup : VBoxContainer
 {
@@ -28,7 +27,7 @@ public class CreatedGroup : VBoxContainer
 		}
 	}
 
-	public void RemovePassword(String passwordID) {
+	public void RemovePassword(string passwordID) {
 
 		Debugger.Print("Checking If '"+passwordID+"' Exists");
 		if(HasNode("GroupItems/"+passwordID)) {
@@ -50,7 +49,7 @@ public class CreatedGroup : VBoxContainer
 		}
 	}
 
-	private void OnCheckBoxToggled(Boolean value) {
+	private void OnCheckBoxToggled(bool value) {
 
 		GetNode<Control>("GroupItems").Visible = value;
 	}

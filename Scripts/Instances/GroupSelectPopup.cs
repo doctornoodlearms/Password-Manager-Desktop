@@ -1,13 +1,12 @@
 using Godot;
-using System;
 using NewConsole;
 
 public class GroupSelectPopup : PanelContainer {
 
-	[Signal] public delegate void Accept(String groupName);
+	[Signal] public delegate void Accept(string groupName);
 	[Signal] public delegate void Cancel();
 
-	Boolean moving;
+	bool moving;
 	Vector2 offset = new Vector2();
 
 	public override void _Ready() {
@@ -49,24 +48,24 @@ public class GroupSelectPopup : PanelContainer {
 		}
 	}
 
-	private void AddItem(String value) {
+	private void AddItem(string value) {
 
 		GetNode<OptionButton>("Vbox/OptionButton").AddItem(value);
 	}
-	private void OnOptionButtonItemSelected(Int32 index) {
+	private void OnOptionButtonItemSelected(int index) {
 
 		GetNode<LineEdit>("Vbox/Custom").Visible = index == GetNode<OptionButton>("Vbox/OptionButton").GetItemCount() - 1;
 	}
 	private void OnAcceptPressed() {
 
-		String groupName;
+		string groupName;
 		if(GetNode<LineEdit>("Vbox/Custom").Visible) {
 
 			groupName = GetNode<LineEdit>("Vbox/Custom").Text;
 		}
 		else {
 
-			Int32 index = GetNode<OptionButton>("Vbox/OptionButton").Selected;
+			int index = GetNode<OptionButton>("Vbox/OptionButton").Selected;
 			groupName = GetNode<OptionButton>("Vbox/OptionButton").GetItemText(index);
 		}
 

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using NewConsole;
 public class SettingsDeviceList : VBoxContainer {
 
@@ -22,7 +21,7 @@ public class SettingsDeviceList : VBoxContainer {
 		GetNode<Label>("../Hbox/Address").Text = "IP Address: "+GetNode<Network>("/root/Network").GetIP();
 	}
 
-	private void OnClientConnected(Int32 id) {
+	private void OnClientConnected(int id) {
 
 		GetNode<Network>("/root/Network").clientID = id;
 		GetNode<HBoxContainer>("Client").Visible = true;
@@ -31,14 +30,14 @@ public class SettingsDeviceList : VBoxContainer {
 
 	private void OnSendPressed() {
 
-		String key = GetNode<LineEdit>("Client/PasswordKey").Text;
-		String label = GetNode<LineEdit>("Client/PasswordLabel").Text;
+		string key = GetNode<LineEdit>("Client/PasswordKey").Text;
+		string label = GetNode<LineEdit>("Client/PasswordLabel").Text;
 		GetNode<LineEdit>("Client/PasswordKey").Text = "";
 		GetNode<LineEdit>("Client/PasswordLabel").Text = "";
 		GetNode<Network>("/root/Network").SendPassword(key, label);
 	}
 
-	private void OnClientInfoRecieved(String platform, String model) {
+	private void OnClientInfoRecieved(string platform, string model) {
 
 		GetNode<Label>("Client/ClientName").Text = platform+": "+model;
 	}

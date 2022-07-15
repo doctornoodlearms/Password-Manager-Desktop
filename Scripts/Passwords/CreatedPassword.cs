@@ -1,6 +1,4 @@
 using Godot;
-using Godot.Collections;
-using System;
 using SavedPassword;
 using NewConsole;
 

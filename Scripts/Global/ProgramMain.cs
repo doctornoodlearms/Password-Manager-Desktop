@@ -5,7 +5,7 @@ using CommandHandler;
 
 public class ProgramMain : Node {
 
-	Boolean isQuitting = false;
+	bool isQuitting = false;
 
 	public override void _Ready() {
 

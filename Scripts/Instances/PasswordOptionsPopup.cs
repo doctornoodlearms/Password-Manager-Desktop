@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using SavedPassword;
 using NewConsole;
 
@@ -9,7 +8,7 @@ public class PasswordOptionsPopup : PanelContainer {
 	[Signal] public delegate void PasswordUpdate(PasswordData savedPassword);
 	[Signal] public delegate void Cancel();
 
-	Boolean moving;
+	bool moving;
 	Vector2 offset=new Vector2();
 
 	private PasswordData savedPassword;
@@ -93,20 +92,20 @@ public class PasswordOptionsPopup : PanelContainer {
 
 		Debugger.Print("Accept Pressed");
 
-		String label= GetNode<LineEdit>("Margin/Vbox/PasswordLabel/LineEdit").Text;
-		String key = GetNode<LineEdit>("Margin/Vbox/PasswordKey/LineEdit").Text;
-		String group = GetNode<Label>("Margin/Vbox/PasswordGroup/Selection/Label").Text;
+		string label= GetNode<LineEdit>("Margin/Vbox/PasswordLabel/LineEdit").Text;
+		string key = GetNode<LineEdit>("Margin/Vbox/PasswordKey/LineEdit").Text;
+		string group = GetNode<Label>("Margin/Vbox/PasswordGroup/Selection/Label").Text;
 
 
 		// Advanced
-		String temp = GetNode<LineEdit>("Margin/Vbox/Advanced/PasswordCount/LineEdit").Text;
-		String indexTemp = GetNode<LineEdit>("Margin/Vbox/Advanced/PasswordPriority/LineEdit").Text;
+		string temp = GetNode<LineEdit>("Margin/Vbox/Advanced/PasswordCount/LineEdit").Text;
+		string indexTemp = GetNode<LineEdit>("Margin/Vbox/Advanced/PasswordPriority/LineEdit").Text;
 		
-		Int32 count = temp.IsValidInteger() ? int.Parse(temp) : Settings.characterCount;
-		String invalid = GetNode<LineEdit>("Margin/Vbox/Advanced/PasswordUnusable/LineEdit").Text;
-		Int32 set = GetNode<OptionButton>("Margin/Vbox/Advanced/PasswordCharacters/Button").Selected;
-		Boolean legacy = GetNode<CheckBox>("Margin/Vbox/Advanced/PasswordLegacy/Button").Pressed;
-		Int32 index = indexTemp.IsValidInteger() ? int.Parse(indexTemp) : 0;
+		int count = temp.IsValidInteger() ? int.Parse(temp) : Settings.characterCount;
+		string invalid = GetNode<LineEdit>("Margin/Vbox/Advanced/PasswordUnusable/LineEdit").Text;
+		int set = GetNode<OptionButton>("Margin/Vbox/Advanced/PasswordCharacters/Button").Selected;
+		bool legacy = GetNode<CheckBox>("Margin/Vbox/Advanced/PasswordLegacy/Button").Pressed;
+		int index = indexTemp.IsValidInteger() ? int.Parse(indexTemp) : 0;
 
 		PasswordData newPassword = new PasswordData(
 			key,
@@ -144,18 +143,18 @@ public class PasswordOptionsPopup : PanelContainer {
 
 
 	// Change Setting Connections
-	private void OnGroupSelectAccept(String groupName) {
+	private void OnGroupSelectAccept(string groupName) {
 
 		GetNode<Label>("Margin/Vbox/PasswordGroup/Selection/Label").Text = groupName;
 		CheckAcceptDisable();
 
 		GetNode<Control>("Margin/Vbox/ToggleAdvanced").GrabFocus();
 	}
-	private void OnPasswordLabelTextChanged(String newPasswordLabel) {
+	private void OnPasswordLabelTextChanged(string newPasswordLabel) {
 
 		CheckAcceptDisable();
 	}
-	private void OnPasswordKeyTextChanged(String newPasswordKey) {
+	private void OnPasswordKeyTextChanged(string newPasswordKey) {
 
 		CheckAcceptDisable();
 	}

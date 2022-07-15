@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using SavedPassword;
 using NewConsole;
 
@@ -37,7 +36,7 @@ public class PasswordList : Control
 		}
 	}
 
-	public CreatedGroup CreateNewGroup(String groupName) {
+	public CreatedGroup CreateNewGroup(string groupName) {
 
 		Debugger.Print("Adding New Group '"+groupName+"' To Scene Tree");
 		VBoxContainer newGroup = GD.Load<PackedScene>("res://Scenes/Instances/Saved_Group.tscn").Instance<CreatedGroup>();
