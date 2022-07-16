@@ -55,7 +55,7 @@ class PasswordDatabase : Node {
 		GD.Seed(seed.Hash());
 		for(int i=0; i<savedPassword.CharCount; i++) {
 
-			password += characters[(int) Mathf.Round((int) GD.RandRange(0, characters.Length-1))];
+			password += characters[(int) Mathf.Round((float) GD.RandRange(0, characters.Length-1))];
 		}
 
 		OS.Clipboard = password;

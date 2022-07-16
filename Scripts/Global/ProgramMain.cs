@@ -9,12 +9,6 @@ public class ProgramMain : Node {
 
 	public override void _Ready() {
 
-		// Assign Enviornment Variable
-		if(!Settings.safeMode) {
-
-			System.Environment.SetEnvironmentVariable(Settings.ProgramEnvVar, OS.GetExecutablePath(), EnvironmentVariableTarget.User);
-		}
-
 		GetNode<Validation>("/root/Validation").Validate();
 		GetNode<PasswordDatabase>("/root/PasswordDB").Init();
 
@@ -23,6 +17,16 @@ public class ProgramMain : Node {
 		commandList.AddCommand(new SafeModeCommand());
 		commandList.AddCommand(new GetPasswordCommand());
 		commandList.ExecuteCommand(OS.GetCmdlineArgs());
+
+		// Assign Enviornment Variable
+		if(!Settings.safeMode) {
+
+			System.Environment.SetEnvironmentVariable(Settings.ProgramEnvVar, OS.GetExecutablePath(), EnvironmentVariableTarget.User);
+		}
+		else {
+
+			Debugger.Print("Loading into safe mode", Debugger.DebuggerState.STATE_WARNING);
+		}
 
 		base._Ready();
 	}
