@@ -18,6 +18,9 @@ If the program is opened from a command line then you can also pass in commands
 
 ## Change Log
 
+### v1.1.1
+- Removed enviornment variable because of jank
+
 ### v1.1.0
 - Added Priority to saved passwords
 - Added command line support

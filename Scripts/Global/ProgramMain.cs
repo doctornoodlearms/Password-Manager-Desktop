@@ -16,16 +16,13 @@ public class ProgramMain : Node {
 		commandList.AddCommand(new TestCommand());
 		commandList.AddCommand(new SafeModeCommand());
 		commandList.AddCommand(new GetPasswordCommand());
-		commandList.ExecuteCommand(OS.GetCmdlineArgs());
 
-		// Assign Enviornment Variable
-		if(!Settings.safeMode) {
+		string runCommand = ProjectSettings.GetSetting("editor/CommandOnStart").ToString();
+		commandList.ExecuteCommand(runCommand != "" ? runCommand.Split(" ") : OS.GetCmdlineArgs());
 
-			System.Environment.SetEnvironmentVariable(Settings.ProgramEnvVar, OS.GetExecutablePath(), EnvironmentVariableTarget.User);
-		}
-		else {
+		if(Settings.safeMode) {
 
-			Debugger.Print("Loading into safe mode", Debugger.DebuggerState.STATE_WARNING);
+			Debugger.Print("Starting in Safe Mode", Debugger.DebuggerState.STATE_WARNING);
 		}
 
 		base._Ready();

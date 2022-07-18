@@ -41,6 +41,8 @@ class PasswordDatabase : Node {
 	/// <param name="savedPassword"></param>
 	public static void GeneratePassword(PasswordData savedPassword) {
 
+		
+
 		string password = "";
 
 		string characters = GetCharacters(savedPassword);
