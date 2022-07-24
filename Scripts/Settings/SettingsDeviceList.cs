@@ -9,8 +9,12 @@ public class SettingsDeviceList : VBoxContainer {
 
 		GetTree().Connect("network_peer_connected", this, nameof(OnClientConnected));
 
-		GetNode<Network>("/root/Network").Connect("ClientInfoRecieved", this, nameof(OnClientInfoRecieved));
+		GetNode<Network>("/root/Network").Connect(nameof(Network.ClientInfoRecieved), this, nameof(OnClientInfoRecieved));
+	}
 
+	public override void _ExitTree() {
+
+		base._ExitTree();
 	}
 
 	private void OnStartServerPressed() {

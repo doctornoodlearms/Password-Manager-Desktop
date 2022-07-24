@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using NewConsole;
 using CommandHandler;
@@ -19,6 +18,10 @@ public class ProgramMain : Node {
 
 		string runCommand = ProjectSettings.GetSetting("editor/CommandOnStart").ToString();
 		commandList.ExecuteCommand(runCommand != "" ? runCommand.Split(" ") : OS.GetCmdlineArgs());
+
+		// Free commands
+		commandList.Free();
+		
 
 		if(Settings.safeMode) {
 
@@ -42,15 +45,16 @@ public class ProgramMain : Node {
 			Settings.SaveToFile();
 
 			Debugger.Print("Removing Nodes");
-			GetTree().Connect("node_removed", this, nameof(NodeRemoved));
+			//GetTree().Connect("node_removed", this, nameof(NodeRemoved));
 
-			Godot.Collections.Array NodeList = GetTree().Root.GetChildren();
-			NodeList.Remove(this);
+			//Godot.Collections.Array NodeList = GetTree().Root.GetChildren();
+			//NodeList.Remove(this);
 
-			foreach(Node i in NodeList) {
+			//foreach(Node i in NodeList) {
 
-				i.QueueFree();
-			};
+			//	i.QueueFree();
+			//};
+			//QueueFree();
 		}
 		base._Notification(what);
 	}
@@ -59,12 +63,14 @@ public class ProgramMain : Node {
 		Debugger.Print("Closing Program...", Debugger.DebuggerState.STATE_WARNING);
 	}
 
-	private void NodeRemoved(Node node) {
+	//private void NodeRemoved(Node node) {
 
-		if(GetTree().GetNodeCount() <= 2) {
+	//	Debugger.Print(node.Name);
+	//	Debugger.Print(GetTree().Root.GetChildCount());
 
-			GetTree().Root.QueueFree();
-			GetTree().Quit();
-		}
-	}
+	//	if(GetTree().GetNodeCount() <= 2) {
+
+
+	//	}
+	//}
 }

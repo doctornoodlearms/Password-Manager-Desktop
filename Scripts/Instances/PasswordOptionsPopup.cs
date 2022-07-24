@@ -58,6 +58,11 @@ public class PasswordOptionsPopup : PanelContainer {
 		}
 	}
 
+	public override void _ExitTree() {
+
+		base._ExitTree();
+	}
+
 	public void Popup() {
 
 		GetNode<LineEdit>("Margin/Vbox/Advanced/PasswordCount/LineEdit").Text = Settings.characterCount.ToString();

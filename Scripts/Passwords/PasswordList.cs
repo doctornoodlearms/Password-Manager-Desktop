@@ -36,6 +36,11 @@ public class PasswordList : Control
 		}
 	}
 
+	public override void _ExitTree() {
+
+		base._ExitTree();
+	}
+
 	public CreatedGroup CreateNewGroup(string groupName) {
 
 		Debugger.Print("Adding New Group '"+groupName+"' To Scene Tree");

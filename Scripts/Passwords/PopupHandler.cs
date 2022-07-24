@@ -1,13 +1,11 @@
 using Godot;
 using SavedPassword;
 using NewConsole;
-public class PopupHandler : Control
-{
+public class PopupHandler : Control {
 
 	[Signal] public delegate void GroupSelectionAccept(string groupName);
 	[Signal] public delegate void GroupSelectionUpdate(string passwordID, string groupName);
 	[Signal] public delegate void GroupSelectionCancel();
-
 
 	public void PopupNotification(string message, string title) {
 

@@ -16,6 +16,18 @@ class PasswordDatabase : Node {
 		get => new Dictionary();
 	}
 
+	/// <summary>
+	/// Removes saved passwords to prevent memory leak
+	/// </summary>
+	public override void _ExitTree() {
+
+		foreach(Object i in passwordList) {
+
+			i.Free();
+		}
+		base._ExitTree();
+	}
+
 	public void Init() {
 
 		Debugger.Print("Attempting To Get Save Data");
