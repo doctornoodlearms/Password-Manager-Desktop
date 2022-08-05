@@ -1,17 +1,16 @@
 using Godot;
 using Godot.Collections;
-using System;
 using SavedPassword;
 using NewConsole;
 public static class FileAccessSystem {
 
-	private const String folderName = "/SaveData/";
+	private const string folderName = "/SaveData/";
 
 	/// <summary>
 /// Gets the global location of the executable file
 /// </summary>
 /// <returns></returns>
-	public static String GetCurrentLocation() {
+	public static string GetCurrentLocation() {
 
 		Godot.Directory dir = new Godot.Directory();
 		dir.Open(OS.GetExecutablePath()+"/..");
@@ -23,8 +22,11 @@ public static class FileAccessSystem {
 	/// </summary>
 	public static void WriteSettings() {
 
-		Debugger.Print("Saving Project Settings");
-		ProjectSettings.SaveCustom("override.cfg");
+		if(!Settings.safeMode) {
+
+			Debugger.Print("Saving Project Settings");
+			ProjectSettings.SaveCustom("override.cfg");
+		}
 	}
 
 	/// <summary>
@@ -32,34 +34,37 @@ public static class FileAccessSystem {
 	/// </summary>
 	/// <param name="fileName"></param>
 	/// <param name="data"></param>
-	public static void WriteAllUserData(String fileName, Godot.Collections.Array<PasswordData> data) {
+	public static void WriteAllUserData(string fileName, Godot.Collections.Array<PasswordData> data) {
 
-		String targetFile = GetCurrentLocation() + folderName + fileName;
+		if(!Settings.safeMode) {
 
-		File file = new File();
+			string targetFile = GetCurrentLocation() + folderName + fileName;
 
-		if(!FolderExists(folderName)) {
+			File file = new File();
 
-			Debugger.Print("Folder '" + folderName + "' Doesnt Exist", Debugger.DebuggerState.STATE_WARNING);
-			Debugger.Print("Creating New Folder");
-			CreateFolder(GetCurrentLocation() + folderName);	
-		}
+			if(!FolderExists(folderName)) {
 
-		if(data.Count > 0) {
-
-			Debugger.Print("Attempting To Open File: "+targetFile);
-			file.Open(targetFile, File.ModeFlags.Write);
-			foreach(PasswordData password in data) {
-
-				file.StoreLine(JSON.Print(password.Save()));
+				Debugger.Print("Folder '" + folderName + "' Doesnt Exist", Debugger.DebuggerState.STATE_WARNING);
+				Debugger.Print("Creating New Folder");
+				CreateFolder(GetCurrentLocation() + folderName);
 			}
-			file.Close();
-		}
-		else {
 
-			Debugger.Print("File Empty: "+targetFile);
-			file.Open(targetFile, File.ModeFlags.Write);
-			file.Close();
+			if(data.Count > 0) {
+
+				Debugger.Print("Attempting To Open File: " + targetFile);
+				file.Open(targetFile, File.ModeFlags.Write);
+				foreach(PasswordData password in data) {
+
+					file.StoreLine(JSON.Print(password.Save()));
+				}
+				file.Close();
+			}
+			else {
+
+				Debugger.Print("File Empty: " + targetFile);
+				file.Open(targetFile, File.ModeFlags.Write);
+				file.Close();
+			}
 		}
 	}
 
@@ -68,33 +73,39 @@ public static class FileAccessSystem {
 	/// </summary>
 	/// <param name="fileName"></param>
 	/// <param name="data"></param>
-	public static void WritePassword(String fileName, PasswordData data) {
+	public static void WritePassword(string fileName, PasswordData data) {
 
-		String targetFile = GetCurrentLocation() + folderName + fileName;
+		if(!Settings.safeMode) {
 
-		if(!FolderExists(folderName)) {
+			string targetFile = GetCurrentLocation() + folderName + fileName;
 
-			Debugger.Print("Folder '" + folderName + "' Doesnt Exist", Debugger.DebuggerState.STATE_WARNING);
-			Debugger.Print("Creating New Folder");
-			CreateFolder(GetCurrentLocation() + folderName);
+			if(!FolderExists(folderName)) {
+
+				Debugger.Print("Folder '" + folderName + "' Doesnt Exist", Debugger.DebuggerState.STATE_WARNING);
+				Debugger.Print("Creating New Folder");
+				CreateFolder(GetCurrentLocation() + folderName);
+			}
+
+			File file = new File();
+			file.Open(targetFile, File.ModeFlags.Write);
+
+			Debugger.Print("Writing '" + data.Id + "' To File");
+			file.StoreLine(JSON.Print(data.Save()));
+			file.Close();
 		}
-
-		File file = new File();
-		file.Open(targetFile, File.ModeFlags.Write);
-
-		Debugger.Print("Writing '"+data.Id+"' To File");
-		file.StoreLine(JSON.Print(data.Save()));
-		file.Close();
 	}
 
-	public static void WriteStringToUser(String fileName, String data) {
+	public static void WriteStringToUser(string fileName, string data) {
 
-		File file = new File();
-		file.Open("user://"+fileName, File.ModeFlags.Write);
-		file.StoreString(data);
-		file.Close();
+		if(!Settings.safeMode) {
+
+			File file = new File();
+			file.Open("user://" + fileName, File.ModeFlags.Write);
+			file.StoreString(data);
+			file.Close();
+		}
 	}
-	public static String ReadStringFromUser(String fileName) {
+	public static string ReadStringFromUser(string fileName) {
 
 		File file = new File();
 		switch(file.Open("user://" + fileName, File.ModeFlags.Read)) {
@@ -114,12 +125,12 @@ public static class FileAccessSystem {
 	/// <param name="fileName"></param>
 	/// <returns></returns>
 	/// <exception cref="FileNotFoundException"></exception>
-	public static Godot.Collections.Array<PasswordData> ReadUserData(String fileName) {
+	public static Godot.Collections.Array<PasswordData> ReadUserData(string fileName) {
 
 		Godot.Collections.Array<PasswordData> array = new Godot.Collections.Array<PasswordData>();
 
 		Godot.File file = new Godot.File();
-		String folderLocation = GetCurrentLocation();
+		string folderLocation = GetCurrentLocation();
 
 		Debugger.Print("Opening File: '"+fileName+"'");
 		switch(file.Open(folderLocation + folderName + fileName, Godot.File.ModeFlags.Read)) {
@@ -131,14 +142,14 @@ public static class FileAccessSystem {
 					
 					Godot.Collections.Dictionary dictionary = (Godot.Collections.Dictionary) JSON.Parse(file.GetLine()).Result;
 					array.Add(new PasswordData(
-						(String) dictionary["key"],
-						newLabel: (String) dictionary["label"],
-						newGroup: (String) dictionary["group"],
-						newLegacy: bool.Parse((String) dictionary["legacy"]),
-						newCount: int.Parse((String) dictionary["count"]),
-						newSet: (CharacterSets) int.Parse((String) dictionary["set"]),
-						newInvalid: (String) dictionary["invalid"],
-						newIndex: dictionary.Contains("index") ? int.Parse((String) dictionary["index"]) : 0
+						(string) dictionary["key"],
+						newLabel: (string) dictionary["label"],
+						newGroup: (string) dictionary["group"],
+						newLegacy: bool.Parse((string) dictionary["legacy"]),
+						newCount: int.Parse((string) dictionary["count"]),
+						newSet: (CharacterSets) int.Parse((string) dictionary["set"]),
+						newInvalid: (string) dictionary["invalid"],
+						newIndex: dictionary.Contains("index") ? int.Parse((string) dictionary["index"]) : 0
 					));
 				}
 		
@@ -159,7 +170,7 @@ public static class FileAccessSystem {
 	/// </summary>
 	/// <param name="targetFolder"></param>
 	/// <returns></returns>
-	private static Boolean FolderExists(String targetFolder) {
+	private static bool FolderExists(string targetFolder) {
 
 		Debugger.Print("Checking If Folder: '" + targetFolder + "' Exists");
 		Directory dir = new Directory();
@@ -170,7 +181,7 @@ public static class FileAccessSystem {
 	/// Create a nw folder directory
 	/// </summary>
 	/// <param name="targetFolder"></param>
-	private static void CreateFolder(String targetFolder) {
+	private static void CreateFolder(string targetFolder) {
 
 		Debugger.Print("Creating Folder: "+targetFolder);
 		Directory dir = new Directory();

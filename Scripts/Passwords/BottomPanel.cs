@@ -1,6 +1,6 @@
 using Godot;
-using System;
 using NewConsole;
+
 public class BottomPanel : MarginContainer
 {
 

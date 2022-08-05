@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using NewConsole;
 public class CreatedGroup : VBoxContainer
 {
@@ -17,11 +16,18 @@ public class CreatedGroup : VBoxContainer
 	public void AddPassword(Node newPassword, int index) {
 
 		Debugger.Print("Adding New Password: "+newPassword.Name);
+		if(GetNode("GroupItems").GetChildCount() != 0) {
 
-		GetNode("GroupItems").AddChild(newPassword);
+			GetNode("GroupItems").AddChild(newPassword);
+			GetNode("GroupItems").MoveChild(newPassword, index);
+		}
+		else {
+
+			GetNode("GroupItems").AddChild(newPassword);
+		}
 	}
 
-	public void RemovePassword(String passwordID) {
+	public void RemovePassword(string passwordID) {
 
 		Debugger.Print("Checking If '"+passwordID+"' Exists");
 		if(HasNode("GroupItems/"+passwordID)) {
@@ -43,7 +49,7 @@ public class CreatedGroup : VBoxContainer
 		}
 	}
 
-	private void OnCheckBoxToggled(Boolean value) {
+	private void OnCheckBoxToggled(bool value) {
 
 		GetNode<Control>("GroupItems").Visible = value;
 	}

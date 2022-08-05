@@ -1,6 +1,4 @@
 using Godot;
-using Godot.Collections;
-using System;
 using SavedPassword;
 using NewConsole;
 
@@ -35,7 +33,7 @@ public class CreatedPassword : HBoxContainer
 	private void OnCopyPressed() {
 
 		Debugger.Print("Copy Pressed");
-		GetNode<PasswordDatabase>("/root/PasswordDB").GeneratePassword(savedPassword);
+		PasswordDatabase.GeneratePassword(savedPassword);
 	}
 	private void OnViewKeyPressed() {
 

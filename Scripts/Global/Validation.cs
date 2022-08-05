@@ -1,20 +1,19 @@
-﻿using System;
-using Godot;
+﻿using Godot;
 using NewConsole;
 public class Validation : Node {
 
-	const String fileName = "PasswordGenToken.sav";
-	const String aesKey = "6E5A7234753778214125442A472D4A61";
+	const string fileName = "PasswordGenToken.sav";
+	const string aesKey = "6E5A7234753778214125442A472D4A61";
 
 	[Signal]
 	public delegate void UserPrompted();
 
-	public static String GetUID() {
+	public static string GetUID() {
 	
 		byte[] data = new byte[64];
 		System.Security.Cryptography.RandomNumberGenerator rng = System.Security.Cryptography.RandomNumberGenerator.Create();
 		rng.GetBytes(data);
-		return BitConverter.ToString(data).Replace("-", "").ToLower();
+		return System.BitConverter.ToString(data).Replace("-", "").ToLower();
 	}
 
 	//	
@@ -30,7 +29,7 @@ public class Validation : Node {
 	public void Validate() {
 
 		// Read user token from file
-		String userToken = "";
+		string userToken = "";
 
 		if(!Settings.saveMaster) {
 
@@ -56,7 +55,7 @@ public class Validation : Node {
 			Debugger.Print("No token created", Debugger.DebuggerState.STATE_WARNING);
 			Debugger.Print("Creating new token");
 
-			String token = GetUID();
+			string token = GetUID();
 			Settings.token = token;
 			FileAccessSystem.WriteStringToUser(fileName, EncryptString(token));
 			return;
@@ -99,39 +98,39 @@ public class Validation : Node {
 		}
 	}
 
-	public static String EncryptString(String data) {
+	public static string EncryptString(string data) {
 
 		Debugger.Print("Encrypting String");
 
 		AESContext aes = new AESContext();
 		aes.Start(AESContext.Mode.EcbEncrypt, aesKey.ToUTF8());
-		Byte[] encrypted = aes.Update(data.ToUTF8());
+		byte[] encrypted = aes.Update(data.ToUTF8());
 
-		String encryptedString = "";
-		foreach(Byte @byte in encrypted) {
+		string encryptedString = "";
+		foreach(byte @byte in encrypted) {
 
 			encryptedString += @byte.ToString().ToInt().ToString("x2");
 		}
 		return encryptedString;
 	}
 
-	public static String DecryptString(String secret) {
+	public static string DecryptString(string secret) {
 
 		Debugger.Print("Decrypting String");
 
-		Byte[] decrypt = new Byte[secret.Length / 2];
+		byte[] decrypt = new byte[secret.Length / 2];
 
 		for(int i = 0; i <= secret.Length - 2; i += 2) {
-			decrypt[i / 2] = (Byte) (secret[i].ToString() + secret[i + 1].ToString()).HexToInt();
+			decrypt[i / 2] = (byte) (secret[i].ToString() + secret[i + 1].ToString()).HexToInt();
 		}
 		
 		AESContext aes = new AESContext();
 		aes.Start(AESContext.Mode.EcbDecrypt, aesKey.ToUTF8());
-		Byte[] decryptedString = aes.Update(decrypt);
+		byte[] decryptedString = aes.Update(decrypt);
 		aes.Finish();
 
-		String returnValue = "";
-		foreach(Byte @byte in decryptedString) {
+		string returnValue = "";
+		foreach(byte @byte in decryptedString) {
 
 			returnValue += (char) @byte;
 		}
@@ -139,7 +138,7 @@ public class Validation : Node {
 	}
 
 	// Confirms the master password entered by the user while in flashdrive mode
-	public static Boolean ConfirmMaster(String enteredMaster) {
+	public static bool ConfirmMaster(string enteredMaster) {
 
 		if(EncryptString(enteredMaster.PadRight(32)) == Settings.master) {
 

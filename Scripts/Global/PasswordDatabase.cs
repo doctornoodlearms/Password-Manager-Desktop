@@ -1,6 +1,5 @@
 ﻿using Godot;
-using System;
-using System.Collections.Generic;
+using Godot.Collections;
 using SavedPassword;
 using NewConsole;
 
@@ -9,13 +8,24 @@ class PasswordDatabase : Node {
 	[Signal] public delegate void PasswordCreated(PasswordData savedPassword);
 	[Signal] public delegate void PasswordRemoved(PasswordData savedPassword);
 
-	private const String fileName = "User_Passwords.sav";
+	private const string fileName = "User_Passwords.sav";
 
-	public Dictionary<String, PasswordData> passwordList = new Dictionary<String, PasswordData>();
-	
+	public Array<PasswordData> passwordList = new Array<PasswordData>();
 
-	Godot.Collections.Dictionary groupList {
-		get => new Godot.Collections.Dictionary();
+	Dictionary groupList {
+		get => new Dictionary();
+	}
+
+	/// <summary>
+	/// Removes saved passwords to prevent memory leak
+	/// </summary>
+	public override void _ExitTree() {
+
+		foreach(Object i in passwordList) {
+
+			i.Free();
+		}
+		base._ExitTree();
 	}
 
 	public void Init() {
@@ -25,7 +35,7 @@ class PasswordDatabase : Node {
 
 			foreach(PasswordData password in FileAccessSystem.ReadUserData(fileName)) {
 
-				passwordList.Add(password.GetHashCode().ToString(), password);
+				passwordList.Insert(FindIndexForPassword(password), password);
 			};
 			Debugger.Print("Save Data Found");
 		}
@@ -41,23 +51,25 @@ class PasswordDatabase : Node {
 	/// Generate a new password and copy it to clipboard
 	/// </summary>
 	/// <param name="savedPassword"></param>
-	public void GeneratePassword(PasswordData savedPassword) {
+	public static void GeneratePassword(PasswordData savedPassword) {
 
-		String password = "";
+		
 
-		String characters = GetCharacters(savedPassword);
+		string password = "";
+
+		string characters = GetCharacters(savedPassword);
 		Debugger.Print(savedPassword.CharCount, Debugger.DebuggerState.STATE_WARNING);
 
-		String seed = savedPassword.Legacy ?
+		string seed = savedPassword.Legacy ?
 			Settings.master + savedPassword.Key :
 			Settings.token + Settings.master + savedPassword.Key;
 
 		Debugger.Print("Creating New Password");
 		
 		GD.Seed(seed.Hash());
-		for(Int32 i=0; i<savedPassword.CharCount; i++) {
+		for(int i=0; i<savedPassword.CharCount; i++) {
 
-			password += characters[(Int32)Mathf.Round((Single)GD.RandRange(0, characters.Length-1))];
+			password += characters[(int) Mathf.Round((float) GD.RandRange(0, characters.Length-1))];
 		}
 
 		OS.Clipboard = password;
@@ -86,10 +98,10 @@ class PasswordDatabase : Node {
 
 		Debugger.Print("Checking If Password: '" + savedPassword.Id+"' Exists");
 
-		if(passwordList.ContainsKey(savedPassword.Id)) {
+		if(passwordList.Contains(savedPassword)) {
 
 			Debugger.Print("Removing Password");
-			passwordList.Remove(savedPassword.Id);
+			passwordList.Remove(savedPassword);
 		}
 		SaveToFile();
 		EmitSignal(nameof(PasswordRemoved), savedPassword);
@@ -99,14 +111,16 @@ class PasswordDatabase : Node {
 	/// Remove currently saved password
 	/// </summary>
 	/// <param name="passwordID"></param>
-	public void RemovePassword(String passwordID) {
+	public void RemovePassword(int passwordId) {
 
-		Debugger.Print("Checking If Password: '" + passwordID + "' Exists");
-		if(passwordList.ContainsKey(passwordID)) {
+		Debugger.Print("Checking If Password: '" + passwordId + "' Exists");
+
+		int passwordIndex = GetIndexOfPassword(passwordId);
+		if(passwordIndex != -1) {
 
 			Debugger.Print("Removing Password");
-			PasswordData savedPassword = passwordList[passwordID];
-			passwordList.Remove(passwordID);
+			PasswordData savedPassword = passwordList[passwordIndex];
+			passwordList.Remove(savedPassword);
 			EmitSignal(nameof(PasswordRemoved), savedPassword);
 		}
 	}
@@ -119,9 +133,9 @@ class PasswordDatabase : Node {
 
 		Debugger.Print("Adding Password: " + savedPassword.Id + " To Save Data");
 
-		if(!passwordList.ContainsKey(savedPassword.Id)) {
+		if(!passwordList.Contains(savedPassword)) {
 
-			passwordList.Add(savedPassword.Id, savedPassword);
+			passwordList.Insert(FindIndexForPassword(savedPassword), savedPassword);
 		}
 
 		try {
@@ -142,13 +156,13 @@ class PasswordDatabase : Node {
 	/// </summary>
 	/// <param name="oldPasswordID"></param>
 	/// <param name="newPassword"></param>
-	public void UpdatePassword(String oldPasswordID, PasswordData newPassword) {
+	public void UpdatePassword(int oldPasswordId, PasswordData newPassword) {
 
-		Debugger.Print("Updating Password: "+ oldPasswordID);
+		Debugger.Print("Updating Password: "+ oldPasswordId);
 
-		RemovePassword(oldPasswordID);
+		RemovePassword(oldPasswordId);
 
-		passwordList.Add(newPassword.Id, newPassword);
+		passwordList.Insert(FindIndexForPassword(newPassword), newPassword);
 		SaveToFile();
 
 		EmitSignal(nameof(PasswordCreated), newPassword);
@@ -158,11 +172,52 @@ class PasswordDatabase : Node {
 	/// Returns list of group names
 	/// </summary>
 	/// <returns></returns>
-	public Godot.Collections.Array GetGroupNames() {
+	public Array GetGroupNames() {
 
 		Debugger.Print("Retrieving List Of All Groups");
 		return GetTree().GetNodesInGroup("Group");
 	}
+	public Array<PasswordData> GetPasswordsInGroup(string groupName) {
+
+		Array<PasswordData> passwords = new Array<PasswordData>();
+		foreach(PasswordData i in passwordList) {
+
+			if(i.Group == groupName) {
+			
+				passwords.Add(i);
+			}
+		}
+		return passwords;
+	}
+	public int GetPasswordIndexInGroup(int passwordId) {
+
+		string targetGroup = "";
+		Array<PasswordData> array = new Array<PasswordData>();
+
+		foreach(PasswordData i in passwordList) {
+
+			if(i.Id == passwordId) {
+			
+				targetGroup = i.Group;
+			}
+		}
+		foreach(PasswordData i in passwordList) {
+
+			if(i.Group == targetGroup) {
+
+				array.Add(i);
+			}
+		}
+		for(int i = 0; i < array.Count; i++) {
+
+			if(array[i].Id == passwordId) {
+
+				return i;
+			}
+		}
+		return -1;
+	}
+
 
 	/// <summary>
 	/// Saves the list of passwords to file
@@ -171,16 +226,13 @@ class PasswordDatabase : Node {
 
 		Debugger.Print("Saving Passwords");
 
-		Godot.Collections.Array<PasswordData> array = new Godot.Collections.Array<PasswordData>();
+		Array<PasswordData> array = new Array<PasswordData>();
 
-		if(passwordList.Count > 0) {
+		foreach(PasswordData i in passwordList) {
 
-			IEnumerator<PasswordData> enumerator = passwordList.Values.GetEnumerator();
-			while(enumerator.MoveNext()) {
-
-				array.Add(enumerator.Current);
-			}
+			array.Add(i);
 		}
+
 		FileAccessSystem.WriteAllUserData(fileName, array);
 	}
 
@@ -189,12 +241,12 @@ class PasswordDatabase : Node {
 	/// </summary>
 	/// <param name="savedPassword"></param>
 	/// <returns></returns>
-	private String GetCharacters(PasswordData savedPassword) {
+	private static string GetCharacters(PasswordData savedPassword) {
 
 		Debugger.Print("Getting Character List");
 
-		String usuableCharacters = "";
-		String currentCharacterSet = "";
+		string usuableCharacters = "";
+		string currentCharacterSet = "";
 
 		Debugger.Print("Accounting For Character Set");
 
@@ -214,7 +266,7 @@ class PasswordDatabase : Node {
 		}
 
 		Debugger.Print("Accounting For Unusable Characters");
-		foreach(Char i in currentCharacterSet) {
+		foreach(char i in currentCharacterSet) {
 
 			if(savedPassword.CharInvalid.Contains(i.ToString()) == false) {
 
@@ -223,5 +275,60 @@ class PasswordDatabase : Node {
 		}
 
 		return usuableCharacters;
+	}
+
+	private int FindIndexForPassword(PasswordData newPassword, int minIndex = 0, int maxIndex = -1) {
+
+		if(maxIndex == -1) {
+
+			maxIndex = passwordList.Count;
+		}
+		if(maxIndex == minIndex) {
+
+			return minIndex;
+		}
+		else {
+
+			int currentIndex = Mathf.FloorToInt((minIndex + maxIndex) / 2);
+
+			// Password index Greater then current, Moves password up in list
+			if(newPassword.Index > passwordList[currentIndex].Index) {
+
+				return FindIndexForPassword(newPassword, minIndex, currentIndex);
+			}
+			// Password index Less then current, Moves password down in list
+			if(newPassword.Index < passwordList[currentIndex].Index) {
+
+				return FindIndexForPassword(newPassword, currentIndex + 1, maxIndex);
+			}
+			// Password index Equals current, Move password down in list
+			if(newPassword.Index == passwordList[currentIndex].Index) {
+
+				return FindIndexForPassword(newPassword, currentIndex + 1, maxIndex);
+			}
+		}
+		return passwordList.Count - 1;
+	}
+	private int GetIndexOfPassword(PasswordData targetPassword) {
+
+		for(int i = 0; i < passwordList.Count; i++) {
+
+			if(targetPassword.Id == passwordList[i].Id) {
+
+				return i;
+			}
+		}
+		return -1;
+	}
+	private int GetIndexOfPassword(int passwordId) {
+
+		for(int i = 0; i < passwordList.Count; i++) {
+
+			if(passwordId == passwordList[i].Id) {
+
+				return i;
+			}
+		}
+		return -1;
 	}
 }

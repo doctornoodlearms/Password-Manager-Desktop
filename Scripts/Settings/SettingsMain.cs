@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using NewConsole;
 public class SettingsMain : VBoxContainer {
 
@@ -21,7 +20,7 @@ public class SettingsMain : VBoxContainer {
 		
 
 		characterCount.PlaceholderText = Settings.characterCount.ToString();
-		characterSet.Selected = (Int32) Settings.characterSet;
+		characterSet.Selected = (int) Settings.characterSet;
 		unusableCharacters.PlaceholderText = Settings.unusableCharacters;
 
 		hideMaster.Pressed = Settings.hideMaster;
@@ -52,33 +51,33 @@ public class SettingsMain : VBoxContainer {
 		}
 	}
 
-	private void OnCharacterCountTextEntered(String value) {
+	private void OnCharacterCountTextEntered(string value) {
 
 		characterCount.Text = "";
 		characterCount.PlaceholderText = value;
 		Settings.SetCharacterCount(value);
 	}
-	private void OnUnusableTextEntered(String value) {
+	private void OnUnusableTextEntered(string value) {
 
 		unusableCharacters.Text = "";
 		unusableCharacters.PlaceholderText = value;
 		Settings.unusableCharacters = value;
 	}
-	private void OnCharacterSetItemSelected(Int32 value) {
+	private void OnCharacterSetItemSelected(int value) {
 
 		Settings.characterSet = value;
 	}
-	private void OnMasterToggled(Boolean value) {
+	private void OnMasterToggled(bool value) {
 
 		hideMaster.Text = value ? "Enabled" : "Disabled";
 		Settings.hideMaster = value;
 	}
-	private void OnSaveMasterToggled(Boolean value) {
+	private void OnSaveMasterToggled(bool value) {
 
 		saveMaster.Text = value ? "Enabled" : "Disabled";
 		Settings.saveMaster = value;
 	}
-	private void OnLegacyPressed(Boolean value) {
+	private void OnLegacyPressed(bool value) {
 
 		Settings.legacy = value;
 	}

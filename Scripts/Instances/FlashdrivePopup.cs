@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using NewConsole;
 
@@ -25,7 +24,7 @@ public class FlashdrivePopup : VBoxContainer {
 		}
 	}
 
-	private void onShowPressed(Boolean value) {
+	private void onShowPressed(bool value) {
 
 		GetNode<LineEdit>("Hbox/LineEdit").Secret = !value;
 	}
