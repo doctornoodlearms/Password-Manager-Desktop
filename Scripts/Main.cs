@@ -2,8 +2,7 @@ using Godot;
 using SavedPassword;
 using NewConsole;
 
-public class Main : VBoxContainer
-{
+public class Main : VBoxContainer {
 
 	public override void _Ready() {
 

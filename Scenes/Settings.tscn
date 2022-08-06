@@ -30,6 +30,7 @@ __meta__ = {
 }
 
 [node name="Main" type="VBoxContainer" parent="Background/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -218,7 +219,6 @@ size_flags_vertical = 3
 align = 1
 
 [node name="Token" type="VBoxContainer" parent="Background/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0

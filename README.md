@@ -20,6 +20,9 @@ If the program is opened from a command line then you can also pass in commands
 
 ## Change Log
 
+### v1.1.3
+- Updated to Godot 3.5
+
 ### v1.1.2
 - General improvements to prevent memory leaks
 
