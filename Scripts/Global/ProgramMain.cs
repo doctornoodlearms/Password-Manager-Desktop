@@ -15,6 +15,7 @@ public class ProgramMain : Node {
 		commandList.AddCommand(new TestCommand());
 		commandList.AddCommand(new SafeModeCommand());
 		commandList.AddCommand(new GetPasswordCommand());
+		commandList.AddCommand(new CopyUserCommand());
 
 		string runCommand = ProjectSettings.GetSetting("editor/CommandOnStart").ToString();
 		commandList.ExecuteCommand(runCommand != "" ? runCommand.Split(" ") : OS.GetCmdlineArgs());
