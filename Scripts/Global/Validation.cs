@@ -3,7 +3,7 @@ using NewConsole;
 public class Validation : Node {
 
 	const string fileName = "PasswordGenToken.sav";
-	const string aesKey = "6E5A7234753778214125442A472D4A61";
+	const string aesKey;
 
 	[Signal]
 	public delegate void UserPrompted();
